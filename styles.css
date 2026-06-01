@@ -1,0 +1,15 @@
+.hero {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem;
+   
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(8rem, 12vw, 10rem);
+    
+}
