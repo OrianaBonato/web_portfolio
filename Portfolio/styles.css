@@ -1,0 +1,83 @@
+.hero {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem;   
+    text-align: center;
+}
+
+.name {
+    font-size: clamp(8rem, 12vw, 10rem);
+    margin-bottom: 0.8rem;
+    font-family: "M PLUS U", sans-serif;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.professional-title {
+    margin-top: 1rem;
+    font-family: "Instrument Serif", serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 40px;
+}
+
+
+section {
+    padding: 16rem 0;
+}
+
+.description {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 8rem 4rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.about-me-title {
+    margin: 0;
+    margin-top: 1rem;
+
+    font-family: "M PLUS U", sans-serif;
+    font-weight: 300;
+    font-size: 35px;
+    text-transform: uppercase;
+
+    max-width: 900px;
+}
+
+.highlight {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 45px;
+}
+
+.highlight-2{
+    font-family: "M PLUS U", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.about-me {
+    width: 40%;
+    margin-top: 12rem;
+    margin-left: auto;
+
+    font-family: "Instrument Serif", serif;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.span {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 40px;
+}
+
+
