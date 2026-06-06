@@ -9,9 +9,9 @@
 }
 
 .name {
+    font-family: "Raleway", sans-serif;
     font-size: clamp(8rem, 12vw, 10rem);
     margin-bottom: 0.8rem;
-    font-family: "M PLUS U", sans-serif;
     font-weight: 600;
     line-height: 1;
 }
@@ -33,7 +33,6 @@ section {
     max-width: 1400px;
     margin: 0 auto;
     padding: 8rem 4rem;
-
     display: flex;
     flex-direction: column;
 }
@@ -41,8 +40,7 @@ section {
 .about-me-title {
     margin: 0;
     margin-top: 1rem;
-
-    font-family: "M PLUS U", sans-serif;
+    font-family: "Raleway", sans-serif;
     font-weight: 300;
     font-size: 35px;
     text-transform: uppercase;
@@ -58,8 +56,8 @@ section {
 }
 
 .highlight-2{
-    font-family: "M PLUS U", sans-serif;
-    font-weight: 500;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
     font-style: normal;
 }
 
@@ -67,17 +65,56 @@ section {
     width: 40%;
     margin-top: 12rem;
     margin-left: auto;
-
     font-family: "Instrument Serif", serif;
     font-weight: 500;
-    font-size: 30px;
+    font-size: 35px;
 }
 
 .span {
-    font-family: "Instrument Serif", serif;
+    font-family: "Raleway", sans-serif;
     font-weight: 400;
     font-style: italic;
     font-size: 40px;
+}
+
+.services-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 8rem 4rem;
+}
+
+.section-label {
+    font-family: "Raleway", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 3rem 0;
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+}
+
+@media (max-width: 768px) {
+    .services {
+        grid-template-columns: 1fr;
+    }
+}
+
+.service-title{
+    font-family: "Instrument Serif", serif;
+    font-weight: 500;
+    font-size: 40px;
+    font-style: italic;
+}
+
+.service-description{
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: 20px;
 }
 
 
