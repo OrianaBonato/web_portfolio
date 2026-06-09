@@ -294,13 +294,22 @@ section {
     height: 440px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+}
+
+.about-right-content {
+    display: flex;
+    flex-direction: column;
 }
 
 .greeting, .about-role{
     font-family: "Instrument Serif", serif;
     font-weight: 500;
     font-size: 30px;
+}
+
+.about-role {
+    margin-top: 200px;
 }
 
 .about-name{
@@ -323,4 +332,82 @@ section {
 .about-photo {
     width: 300px;
     height: 440px;
+}
+
+.cv-button {
+    width: fit-content;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 3rem;
+
+    padding: 0.4rem 0.4rem 0.4rem 2rem;
+
+    border: 2px solid #1E1E1E;
+    border-radius: 999px;
+
+    text-decoration: none;
+
+    transition: all 0.35s ease;
+}
+
+.cv-text {
+    font-family: "Raleway", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+
+    color: #1E1E1E;
+
+    transition: color 0.35s ease;
+}
+
+.cv-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+
+    transition: all 0.35s ease;
+}
+
+.cv-arrow {
+    width: 20px;
+    height: 20px;
+
+    transform: rotate(0deg);
+
+    transition: transform 0.35s ease;
+}
+
+.cv-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.cv-button:hover {
+    background-color: #1E1E1E;
+    border-color: #1E1E1E;
+}
+
+.cv-button:hover .cv-text {
+    color: #FFFFFF;
+}
+
+.cv-button:hover .cv-icon {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+}
+
+.cv-button:hover .cv-arrow {
+    transform: rotate(45deg);
 }
