@@ -1,3 +1,7 @@
+body {
+    margin: 0;    
+}
+
 .hero {
     min-height: 70vh;
     display: flex;
@@ -294,91 +298,168 @@ section {
     line-height: 1;
 }
 
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-}
+/* ==========================================
+   PROJECTS — SPLIT SCROLL
+========================================== */
 
-.project-card {
+.projects-split {
     position: relative;
-    aspect-ratio: 4 / 3;
-    background-color: #FFFFFF;
-    border: 1px solid #E5E5E5;
-    border-radius: 24px;
+    height: 500vh; /* (nº de "avances" + 1) x 100vh — ver script.js: STEPS */
+    margin-top: 4rem;
+}
+
+.projects-split-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     overflow: hidden;
-    cursor: pointer;
+    background-color: #1E1E1E;
 }
 
-.project-image {
-    width: 100%;
+.projects-split-panel {
+    position: absolute;
+    top: 0;
+    width: 50%;
     height: 100%;
-
-    object-fit: cover;
-    display: block;
-
-    transition: opacity 0.3s ease;
+    overflow: hidden;
 }
 
-.project-overlay {
+.projects-split-panel--left  { left: 0; }
+.projects-split-panel--right { right: 0; }
+
+.project-cover {
     position: absolute;
     inset: 0;
-
-    background-color: #1E1E1E;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    gap: 1rem;
-
+    display: block;
+    text-decoration: none;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     opacity: 0;
-
-    transition: opacity 0.3s ease;
+    transition: opacity 0.9s ease;
 }
 
-.project-icon {
-    width: 2rem;
-    height: 2rem;
-    color: #FFFFFF;
-    transform: translateY(10px);
-    transition: transform 0.3s ease;
-}
-
-.project-title {
-    margin: 0;
-    font-family: "Raleway", sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #FFFFFF;
-    text-align: center;
-    transform: translateY(10px);
-    transition: transform 0.3s ease;
-    text-transform: uppercase;
-}
-
-.project-card:hover .project-image {
-    opacity: 0;
-}
-
-.project-card:hover .project-overlay {
+.project-cover.is-active {
     opacity: 1;
 }
 
-.project-card:hover .project-icon,
-.project-card:hover .project-title {
-    transform: translateY(0);
+.project-cover--placeholder {
+    background-image: repeating-linear-gradient(135deg, rgba(0,0,0,.07) 0 2px, transparent 2px 15px);
 }
 
-@media (max-width: 768px) {
+.project-cover-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.38));
+}
 
-    .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        padding: 1rem;
-    }
+.project-cover-logo {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    padding: 2rem;
+    text-align: center;
+    color: #FFFFFF;
+}
 
+.project-cover-title {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    line-height: 1;
+    letter-spacing: 0.04em;
+}
+
+.project-cover-title sup {
+    font-size: 0.42em;
+    letter-spacing: 0;
+    margin-left: 0.12em;
+}
+
+.project-cover-title--sans {
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.project-cover-sub {
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+}
+
+.project-cover-note {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,.55);
+}
+
+.project-index {
+    position: absolute;
+    top: 2rem;
+    z-index: 6;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,.85);
+}
+
+.project-index--left  { left: 2rem; }
+.project-index--right { right: 2rem; }
+
+.projects-split-divider {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: rgba(255,255,255,.28);
+    z-index: 5;
+}
+
+.projects-split-hint {
+    position: absolute;
+    bottom: 1.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: #FFFFFF;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.projects-split-hint-arrow {
+    font-size: 1rem;
+    line-height: 1;
+    animation: projects-hint-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes projects-hint-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
 }
 
 .about-me-label {
@@ -581,6 +662,10 @@ section {
     transition: all 0.3s ease;
 }
 
+.experience-item:last-child {
+    border-bottom: none;
+}
+
 .experience-content {
     max-width: 1000px;
 }
@@ -682,4 +767,83 @@ section {
         line-height: 1.7;
     }
 
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer {
+    background-color: #1E1E1E;
+
+    padding: 5rem 2rem 4rem;
+}
+
+.footer-content {
+    
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.footer-name {
+    justify-content: center;
+    font-family: "Raleway", sans-serif;
+    font-size: 60px;
+    font-weight: 600;
+    color: #F5F5F5;
+}
+
+.footer-bottom {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4rem;
+    text-decoration: none;
+    color: #F5F5F5;
+    font-family: "Instrument Serif", serif;
+    font-size: 40px;
+    font-style: italic;
+}
+
+.footer-arrow {
+    width: 48px;
+    height: 48px;
+    transform: rotate(0deg);
+    transition: transform .35s ease;
+}
+
+.footer-cta:hover .footer-arrow {
+
+    transform: translateX(8px);
+    transform: rotate(45deg);
+}
+
+.footer-socials {
+
+    display: flex;
+
+    gap: 1.5rem;
+}
+
+.footer-socials img {
+
+    width: 32px;
+    height: 32px;
+
+    display: block;
+
+    filter: brightness(0) invert(1);
+
+    transition: opacity .3s ease;
+}
+
+.footer-socials a:hover img {
+
+    opacity: .7;
 }
