@@ -16,13 +16,20 @@
     let ticking = false;
     let currentStep = -1;
 
+    // 0% activa · -100% ya pasada · 100% pendiente
+    function place(el, activeIdx) {
+        const idx = Number(el.dataset.index);
+        const y = idx === activeIdx ? 0 : (idx < activeIdx ? -100 : 100);
+        el.style.transform = `translateY(${y}%)`;
+    }
+
     function apply(step) {
         // izquierda avanza en steps impares acumulados, derecha en los pares
         const leftIdx  = 2 * Math.ceil(step / 2);
         const rightIdx = 1 + 2 * Math.floor(step / 2);
 
-        leftCovers.forEach(el => el.classList.toggle('is-active', Number(el.dataset.index) === leftIdx));
-        rightCovers.forEach(el => el.classList.toggle('is-active', Number(el.dataset.index) === rightIdx));
+        leftCovers.forEach(el => place(el, leftIdx));
+        rightCovers.forEach(el => place(el, rightIdx));
 
         if (leftLabel)  leftLabel.textContent  = String(leftIdx + 1).padStart(2, '0');
         if (rightLabel) rightLabel.textContent = String(rightIdx + 1).padStart(2, '0');
