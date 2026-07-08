@@ -12,9 +12,35 @@
 
 <body>
 
-    <header>
-        <!-- Logo y navegación -->
-    </header>
+    <!-- FIXED TOP BAR -->
+    <div class="nav-bar">
+        <div class="nav-socials" id="navSocials">
+            <a href="https://www.linkedin.com/in/oriana-bonato/" target="_blank" rel="noopener" class="nav-social-icon">
+                <img src="img/icons/linkedin.svg" alt="LinkedIn">
+            </a>
+            <a href="https://www.behance.net/ocbonato96" target="_blank" rel="noopener" class="nav-social-icon">
+                <img src="img/icons/behance.svg" alt="Behance">
+            </a>
+        </div>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span class="nav-toggle-icon">+</span>
+        </button>
+    </div>
+
+    <!-- FULLSCREEN CURTAIN MENU -->
+    <div class="nav-menu" id="navMenu">
+        <div class="nav-menu-inner">
+
+            <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
+            <a href="#about" class="nav-link" data-section="about">About Me</a>
+            <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+            <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+
+            <button class="nav-lang" id="navLang">EN</button>
+
+        </div>
+    </div>
 
     <main>
         <section class="hero">
@@ -31,7 +57,7 @@
 
         </section>
 
-        <section class="projects">
+        <section class="projects" id="portfolio">
 
             <p class="portfolio-title">PORTFOLIO</p>
 
@@ -98,7 +124,7 @@
 
         </section>
 
-        <section class="about-section">
+        <section class="about-section" id="about">
 
             <div class="about-header">
 
@@ -227,7 +253,7 @@
 
         </section>
 
-        <section class="experience-section">
+        <section class="experience-section" id="experience">
 
             <p class="section-label">PROFESSIONAL EXPERIENCE</p>
 
@@ -317,7 +343,7 @@
 
     </main>
 
-    <footer class="footer">
+    <footer class="footer" id="contact">
 
         <div class="footer-content">
 

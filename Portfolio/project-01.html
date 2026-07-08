@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Estudio 96 — Proyecto de Oriana Bonato">
+    <meta name="description" content="Estudio 96 — Identidad visual, proyecto de Oriana Bonato">
     <title>Estudio 96 — Oriana Bonato</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,16 +12,69 @@
 
 <body>
 
-    <main class="project-page">
-
-        <a href="main.html" class="project-back">&larr; Back to portfolio</a>
-
-        <div class="project-page-body">
-            <h1 class="project-page-title">Estudio 96</h1>
-            <p class="project-page-note">Case study coming soon.</p>
+    <!-- FIXED TOP BAR -->
+    <div class="nav-bar">
+        <div class="nav-socials" id="navSocials">
+            <a href="https://www.linkedin.com/in/oriana-bonato/" target="_blank" rel="noopener" class="nav-social-icon">
+                <img src="img/icons/linkedin.svg" alt="LinkedIn">
+            </a>
+            <a href="https://www.behance.net/ocbonato96" target="_blank" rel="noopener" class="nav-social-icon">
+                <img src="img/icons/behance.svg" alt="Behance">
+            </a>
         </div>
 
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span class="nav-toggle-icon">+</span>
+        </button>
+    </div>
+
+    <!-- FULLSCREEN CURTAIN MENU -->
+    <div class="nav-menu" id="navMenu">
+        <div class="nav-menu-inner">
+
+            <a href="main.html#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
+            <a href="main.html#about" class="nav-link" data-section="about">About Me</a>
+            <a href="main.html#experience" class="nav-link" data-section="experience">Experience</a>
+            <a href="main.html#contact" class="nav-link" data-section="contact">Contact</a>
+
+            <button class="nav-lang" id="navLang">EN</button>
+
+        </div>
+    </div>
+
+    <main>
+        <section class="project-split" id="projectSplit">
+            <div class="project-split-sticky">
+
+                <!-- IZQUIERDA: TEXTO -->
+                <div class="project-split-left">
+                    <a href="main.html" class="project-back">
+                        <span class="project-back-arrow">&#8592;</span>
+                        <span class="project-back-text">Back to Oriana Bonato</span>
+                    </a>
+
+                    <h1 class="project-title">Estudio 96</h1>
+
+                    <p class="project-desc">
+                        Identidad visual completa para un estudio de arquitectura: construcción del logotipo,
+                        sistema tipográfico, paleta cromática y aplicaciones sobre papelería y soportes digitales.
+                    </p>
+
+                    <div class="project-progress" id="projectProgress"></div>
+                    <span class="project-counter" id="projectCounter"></span>
+                </div>
+
+                <!-- DERECHA: FOTOS -->
+                <div class="project-split-right" id="projectPhotos">
+                    <div class="project-photo" style="background-image:url('img/ESTUDIO96/PORTADA.png');"></div>
+                    <div class="project-photo" style="background-image:url('img/ESTUDIO96/01.jpg');"></div>
+                    <div class="project-photo" style="background-image:url('img/ESTUDIO96/03.jpg');"></div>
+                </div>
+
+            </div>
+        </section>
     </main>
 
+    <script src="script.js"></script>
 </body>
 </html>
