@@ -1,0 +1,4 @@
+# Originales sin comprimir de las imágenes de proyecto.
+# Se conservan en el disco pero NO se versionan ni se despliegan:
+# el sitio (Portfolio/) usa las versiones .webp comprimidas.
+_originales/
