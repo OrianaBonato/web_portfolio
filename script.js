@@ -11,29 +11,36 @@
     const leftLabel  = wrap.querySelector('.project-index--left');
     const rightLabel = wrap.querySelector('.project-index--right');
 
-    const STEPS = 4; // nº de "avances" alternados (izq/der) — ajusta si cambias el nº de proyectos
+    // nº de "avances" alternados (izq/der), derivado de las cards que EXISTEN:
+    // así se puede comentar/descomentar un proyecto sin tocar nada más.
+    const totalCovers = leftCovers.length + rightCovers.length;
+    if (totalCovers === 0) return;
+    const STEPS = Math.max(1, totalCovers - 2);
+
+    // altura del track acorde al nº de avances (antes era 500vh fijo en el CSS)
+    wrap.style.height = (STEPS + 1) * 100 + 'vh';
 
     let ticking = false;
     let currentStep = -1;
 
+    // se usa la POSICIÓN de la card dentro de su panel (no un data-index fijo)
     // 0% activa · -100% ya pasada · 100% pendiente
-    function place(el, activeIdx) {
-        const idx = Number(el.dataset.index);
-        const y = idx === activeIdx ? 0 : (idx < activeIdx ? -100 : 100);
+    function place(el, i, activeI) {
+        const y = i === activeI ? 0 : (i < activeI ? -100 : 100);
         el.style.transform = `translateY(${y}%)`;
-        el.classList.toggle('is-active', idx === activeIdx);
+        el.classList.toggle('is-active', i === activeI);
     }
 
     function apply(step) {
         // izquierda avanza en steps impares acumulados, derecha en los pares
-        const leftIdx  = 2 * Math.ceil(step / 2);
-        const rightIdx = 1 + 2 * Math.floor(step / 2);
+        const leftI  = Math.ceil(step / 2);
+        const rightI = Math.floor(step / 2);
 
-        leftCovers.forEach(el => place(el, leftIdx));
-        rightCovers.forEach(el => place(el, rightIdx));
+        leftCovers.forEach((el, i) => place(el, i, leftI));
+        rightCovers.forEach((el, i) => place(el, i, rightI));
 
-        if (leftLabel)  leftLabel.textContent  = String(leftIdx + 1).padStart(2, '0');
-        if (rightLabel) rightLabel.textContent = String(rightIdx + 1).padStart(2, '0');
+        if (leftLabel)  leftLabel.textContent  = String(2 * leftI + 1).padStart(2, '0');
+        if (rightLabel) rightLabel.textContent = String(2 * rightI + 2).padStart(2, '0');
         if (hint) hint.style.opacity = step === 0 ? '1' : '0';
     }
 
@@ -388,6 +395,7 @@
         'about.label': 'Sobre mí',
         'about.greeting': 'Hola, me llamo',
         'about.cv': 'DESCARGAR CV',
+        'about.cvfile': 'img/CV_OrianaBonato_2026_ES.pdf',
         'about.role': 'Soy una <br>diseñadora multidisciplinar',
         'about.text': 'Con formación en branding, diseño gráfico y comunicación digital, creo soluciones visuales que ayudan a las marcas a conectar con las personas de forma significativa.<br><br>Mi experiencia va más allá del diseño. A través del desarrollo front-end, transformo conceptos en experiencias digitales completas, uniendo la visión creativa con su implementación.',
 
@@ -432,22 +440,27 @@
         ['.project-back-text', 'project.back'],
     ];
 
-    // arma la lista de destinos y captura el texto EN original (del HTML)
+    // arma la lista de destinos y captura el valor EN original (del HTML)
+    // modo: 'text' (por defecto) · 'html' (innerHTML) · 'href' (atributo href)
     const targets = [];
-    function addTarget(el, key, html) {
+    function addTarget(el, key, mode) {
         if (!el) return;
-        targets.push({ el, key, html, en: html ? el.innerHTML.trim() : el.textContent.trim() });
+        const en = mode === 'html' ? el.innerHTML.trim()
+                 : mode === 'href' ? el.getAttribute('href')
+                 : el.textContent.trim();
+        targets.push({ el, key, mode, en });
     }
     MAP.forEach(([sel, key, mode]) => {
         const els = document.querySelectorAll(sel);
         if (mode === 'multi') {
-            els.forEach((el, i) => addTarget(el, key + '.' + i, false));
+            els.forEach((el, i) => addTarget(el, key + '.' + i, 'text'));
         } else {
-            els.forEach((el) => addTarget(el, key, mode === 'html'));
+            els.forEach((el) => addTarget(el, key, mode));
         }
     });
-    document.querySelectorAll('[data-i18n]').forEach((el) => addTarget(el, el.dataset.i18n, false));
-    document.querySelectorAll('[data-i18n-html]').forEach((el) => addTarget(el, el.dataset.i18nHtml, true));
+    document.querySelectorAll('[data-i18n]').forEach((el) => addTarget(el, el.dataset.i18n, 'text'));
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => addTarget(el, el.dataset.i18nHtml, 'html'));
+    document.querySelectorAll('[data-i18n-href]').forEach((el) => addTarget(el, el.dataset.i18nHref, 'href'));
 
     const langBtn = document.getElementById('navLang');
     let current = 'en';
@@ -456,7 +469,9 @@
         current = (lang === 'es') ? 'es' : 'en';
         targets.forEach((t) => {
             const val = (current === 'es' && ES[t.key] != null) ? ES[t.key] : t.en;
-            if (t.html) t.el.innerHTML = val; else t.el.textContent = val;
+            if (t.mode === 'html') t.el.innerHTML = val;
+            else if (t.mode === 'href') t.el.setAttribute('href', val);
+            else t.el.textContent = val;
         });
         document.documentElement.setAttribute('lang', current);
         if (langBtn) langBtn.textContent = (current === 'en') ? 'ES' : 'EN';
