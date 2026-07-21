@@ -1361,9 +1361,15 @@ section {
         left: 0;
         width: 22px;
         height: 22px;
+        box-sizing: border-box;
         border-radius: 50%;
         background: #D9D9D9;
         mix-blend-mode: difference;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        white-space: nowrap;
         pointer-events: none;
         z-index: 9999;
         opacity: 0;
@@ -1377,4 +1383,24 @@ section {
         width: 46px;
         height: 46px;
     }
+
+    /* etiqueta con el nombre de la herramienta (marquesina): píldora sólida,
+       sin blend, para que el texto se lea. El ancho lo fija el JS. */
+    .cursor.is-label {
+        mix-blend-mode: normal;
+        height: 34px;
+        border-radius: 999px;
+        padding: 0 16px;
+        background: rgba(30, 30, 30, .8);
+        color: #F7F7F7;
+        font-family: "Raleway", sans-serif;
+        font-size: .8rem;
+        font-weight: 500;
+        letter-spacing: .02em;
+    }
+}
+
+/* pausar la marquesina de herramientas al pasar el mouse por encima */
+.tools-marquee:hover .tools-track {
+    animation-play-state: paused;
 }

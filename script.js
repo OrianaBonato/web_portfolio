@@ -606,9 +606,51 @@ function initMobileProgress(photos, progressBox) {
         if (!raf) raf = requestAnimationFrame(loop);
     }, { passive: true });
 
-    // crecer sobre elementos interactivos
+    // ---- etiqueta con el nombre de la herramienta (marquesina) ----
+    const TOOL_NAMES = {
+        'figma': 'Figma',
+        'photoshop': 'Adobe Photoshop',
+        'illustrator': 'Adobe Illustrator',
+        'after-effects': 'Adobe After Effects',
+        'html5': 'HTML5',
+        'css3': 'CSS3',
+        'javascript': 'JavaScript',
+        'angular': 'Angular',
+        'github': 'GitHub',
+        'git': 'Git',
+    };
+    function toolName(img) {
+        const m = /([a-z0-9-]+)\.svg/i.exec(img.getAttribute('src') || '');
+        const key = m ? m[1].toLowerCase() : '';
+        return TOOL_NAMES[key] || img.getAttribute('alt') || '';
+    }
+    // medidor oculto: para animar el ancho de la píldora al texto exacto
+    const measure = document.createElement('span');
+    measure.style.cssText = 'position:fixed;left:-9999px;top:-9999px;visibility:hidden;' +
+        'display:inline-block;box-sizing:border-box;white-space:nowrap;padding:0 16px;' +
+        'font-family:"Raleway",sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.02em;';
+    document.body.appendChild(measure);
+
+    function enterLabel(name) {
+        if (!name) return;
+        measure.textContent = name;
+        dot.textContent = name;
+        dot.classList.remove('is-hover');
+        dot.classList.add('is-label');
+        dot.style.width = measure.offsetWidth + 'px';
+    }
+    function exitLabel() {
+        dot.classList.remove('is-label');
+        dot.style.width = '';
+        dot.textContent = '';
+    }
+
+    // ---- crecer sobre interactivos / etiqueta sobre la marquesina ----
     const HOVER = 'a, button, .project-cover, [role="button"], input, textarea, select, label';
     document.addEventListener('mouseover', (e) => {
+        const tool = e.target.closest && e.target.closest('.tools-track img');
+        if (tool) { enterLabel(toolName(tool)); return; }
+        if (dot.classList.contains('is-label')) exitLabel();
         dot.classList.toggle('is-hover', !!(e.target.closest && e.target.closest(HOVER)));
     }, { passive: true });
 
