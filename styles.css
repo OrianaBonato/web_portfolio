@@ -1131,3 +1131,215 @@ section {
         transform: none !important;
     }
 }
+/* ==========================================
+   RESPONSIVE — MÓVIL (≤768px)
+   El desktop usa split-scroll con sticky + transforms en vh; en móvil se
+   desactivan (guards en script.js) y todo fluye en una columna.
+========================================== */
+
+/* barra de progreso del detalle: solo existe en móvil (la inyecta el JS) */
+.m-progress { display: none; }
+
+@media (max-width: 768px) {
+
+    /* ---------- NAV BAR ---------- */
+    .nav-bar { height: 72px; padding: 0 1.25rem; }
+    .nav-menu-inner { padding: 5rem 1.75rem 2rem; }
+    .nav-link { font-size: clamp(2.2rem, 11vw, 3rem); }
+
+    /* ---------- FOOTER ---------- */
+    .footer { padding: 3.5rem 1.5rem 3rem; }
+    .footer-name { font-size: 2.4rem; line-height: 1; }
+    .footer-bottom {
+        margin-top: 2.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+    .footer-cta { font-size: 1.7rem; gap: 1rem; }
+    .footer-arrow { width: 34px; height: 34px; }
+    .footer-socials img { width: 30px; height: 30px; }
+
+    /* ================= HOME ================= */
+    section { padding: 4rem 0; }
+
+    /* ---------- HERO ---------- */
+    .hero { min-height: 56vh; padding: 2rem 1.5rem 3rem; }
+    .name { font-size: clamp(2.6rem, 13vw, 3.4rem); margin-bottom: .6rem; }
+    .professional-title { font-size: 1.4rem; margin-top: .6rem; line-height: 1.15; }
+
+    /* ---------- SERVICES / TAGLINE ---------- */
+    .services-section { padding: 3rem 1.5rem; }
+    .about-me-title { font-size: 1.35rem; line-height: 1.35; }
+    .highlight { font-size: 1.7rem; }
+    .about-me {
+        width: 100%;
+        margin-top: 3rem;
+        text-align: right;
+        font-size: 1.25rem;
+    }
+
+    /* ---------- PORTFOLIO (split -> columna apilada) ---------- */
+    .projects { padding: 0 1rem; gap: 0; }
+    .portfolio-title { font-size: clamp(3rem, 15vw, 3.6rem); padding: 3rem 0 2rem; }
+
+    .projects-split {
+        position: static;
+        left: auto;
+        width: auto;
+        margin: 0;
+        height: auto !important;
+    }
+    .projects-split-sticky {
+        position: static;
+        height: auto;
+        overflow: visible;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .projects-split-panel {
+        position: static;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .project-cover {
+        position: relative;
+        inset: auto;
+        transform: none !important;
+        aspect-ratio: 4 / 5;
+        background: #1E1E1E;
+    }
+    /* en desktop el logo solo se ve en la card activa; en móvil siempre */
+    .project-cover-logo { opacity: 1 !important; transform: none !important; }
+
+    .projects-split-divider,
+    .projects-split-hint { display: none; }
+    .project-index { top: 1rem; }
+    .project-index--left { left: 1rem; }
+    .project-index--right { right: 1rem; }
+
+    /* ---------- ABOUT (3 columnas -> apilado) ---------- */
+    .about-section { padding: 4rem 1.5rem 0; }
+    .about-header { margin-bottom: 2.5rem; }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        align-items: stretch;
+    }
+    /* orden visual: nombre -> foto -> rol/descripción */
+    .about-left { order: 1; height: auto; gap: 1.5rem; }
+    .about-center { order: 2; }
+    .about-right { order: 3; height: auto; }
+
+    .about-name { font-size: 2.6rem; }
+    .greeting { font-size: 1.5rem; }
+    .about-role { margin-top: 0; font-size: 1.6rem; }
+    .about-photo { width: 100%; height: auto; aspect-ratio: 339 / 455; object-fit: cover; }
+    .about-text { font-size: .9rem; }
+
+    .cv-button { gap: 1.5rem; }
+
+    .tools-marquee { margin-top: 4rem; }
+    .tools-track { gap: 3rem; }
+    .tools-track img { width: 36px; height: 36px; }
+
+    /* ================= DETALLE DE PROYECTO ================= */
+    .project-split { height: auto !important; padding: 0; }
+
+    .project-split-sticky {
+        position: static;
+        height: auto;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* IZQUIERDA: texto */
+    .project-split-left {
+        flex: none;
+        width: 100%;
+        height: auto;
+        padding: calc(72px + 1.5rem) 1.5rem 2rem;
+    }
+    .project-title { font-size: clamp(2.2rem, 10vw, 2.8rem); }
+    .project-desc { font-size: .9rem; margin-top: 1.5rem; }
+
+    /* dots de escritorio fuera: en móvil manda la barra fija inferior */
+    .project-progress,
+    .project-counter { display: none; }
+
+    /* DERECHA: imágenes a ancho completo, en flujo vertical */
+    .project-split-right {
+        flex: none;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        padding-bottom: 78px;
+    }
+    .project-photo {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+        margin: 0;
+    }
+
+    /* TIRA: ya venían apiladas; solo hay que soltar el translate */
+    .project-photo--strip { overflow: visible; height: auto !important; }
+    .project-strip { transform: none !important; }
+    .project-strip img { width: 100%; height: auto; }
+
+    /* SCREENSHOT LARGO: el JS lo convierte en <img> para verlo entero (sin pan) */
+    .project-photo--tall { background-image: none !important; }
+    .project-photo--tall img { display: block; width: 100%; height: auto; }
+
+    /* CTA final: cuadrado a ancho completo */
+    .project-photo--cta {
+        position: static !important;
+        width: 100% !important;
+        aspect-ratio: 1 / 1;
+        height: auto !important;
+        transform: none !important;
+        font-size: 1.9rem;
+    }
+
+    /* ---------- BARRA DE PROGRESO FIJA (detalle) ---------- */
+    .m-progress {
+        position: fixed;
+        left: 0; right: 0; bottom: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: .9rem 1.5rem 1.2rem;
+        background: #F7F7F7;
+        border-top: 1px solid #ECECEC;
+    }
+    .m-progress-track {
+        flex: 1;
+        height: 3px;
+        border-radius: 2px;
+        background: #e0ddd6;
+        overflow: hidden;
+    }
+    .m-progress-fill {
+        height: 100%;
+        width: 0%;
+        background: #1E1E1E;
+        transition: width .15s linear;
+    }
+    .m-progress-count {
+        font-family: monospace;
+        font-size: .72rem;
+        letter-spacing: .2em;
+        color: #9a9a9a;
+        white-space: nowrap;
+    }
+}

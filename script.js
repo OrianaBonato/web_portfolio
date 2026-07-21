@@ -5,6 +5,13 @@
     const wrap = document.getElementById('projectsSplit');
     if (!wrap) return;
 
+    // en móvil no hay scroll-hijack: el CSS apila las cards en una columna
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        wrap.style.height = 'auto';
+        wrap.querySelectorAll('.project-cover').forEach((c) => { c.style.transform = ''; });
+        return;
+    }
+
     const hint = document.getElementById('projectsHint');
     const leftCovers  = [...wrap.querySelectorAll('.project-cover[data-side="left"]')];
     const rightCovers = [...wrap.querySelectorAll('.project-cover[data-side="right"]')];
@@ -70,6 +77,53 @@
 
 
 // ==========================================
+// PROJECT DETAIL — BARRA DE PROGRESO (solo móvil)
+// Se inyecta por JS: fija abajo, se llena con el scroll y el contador
+// marca qué imagen cruza el centro de la pantalla.
+// ==========================================
+function initMobileProgress(photos, progressBox) {
+    // los dots de escritorio no se usan en móvil
+    if (progressBox) progressBox.style.display = 'none';
+
+    // en modo tira contamos las imágenes de la tira; si no, las fotos.
+    // el CTA final no cuenta como imagen.
+    const strip = document.querySelector('.project-strip');
+    const imgs = strip
+        ? [...strip.querySelectorAll('img')]
+        : photos.filter((p) => !p.classList.contains('project-photo--cta'));
+    const total = imgs.length;
+    if (total === 0) return;
+
+    const box = document.createElement('div');
+    box.className = 'm-progress';
+    box.innerHTML = '<div class="m-progress-track"><div class="m-progress-fill"></div></div>' +
+                    '<span class="m-progress-count"></span>';
+    document.body.appendChild(box);
+    const bar = box.querySelector('.m-progress-fill');
+    const cnt = box.querySelector('.m-progress-count');
+
+    let raf = false;
+    function update() {
+        raf = false;
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        bar.style.width = (p * 100) + '%';
+
+        const mid = window.innerHeight * 0.5;
+        let active = 0;
+        imgs.forEach((im, i) => { if (im.getBoundingClientRect().top <= mid) active = i; });
+        cnt.textContent = String(active + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    }
+    function onScroll() { if (raf) return; raf = true; requestAnimationFrame(update); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('load', update);
+    update();
+}
+
+
+// ==========================================
 // PROJECT DETAIL — SPLIT SCROLL (nº de fotos dinámico)
 // ==========================================
 (function () {
@@ -81,6 +135,30 @@
     const counterEl = document.getElementById('projectCounter');
     const total = photos.length;
     if (total === 0) return;
+
+    // en móvil: sin carrusel cuadrado ni pan; las fotos fluyen a ancho completo
+    // y el progreso pasa a una barra fija abajo.
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        wrap.style.height = 'auto';
+        photos.forEach((p) => {
+            p.style.width = '';
+            p.style.height = '';
+            p.style.transform = '';
+            // el screenshot largo se sirve como <img> en flujo para verlo entero
+            if (p.classList.contains('project-photo--tall')) {
+                const m = /url\(["']?(.+?)["']?\)/.exec(p.style.backgroundImage);
+                if (m) {
+                    const img = document.createElement('img');
+                    img.src = m[1];
+                    img.alt = '';
+                    p.appendChild(img);
+                    p.style.backgroundImage = 'none';
+                }
+            }
+        });
+        initMobileProgress(photos, progressBox);
+        return;
+    }
 
     // MODO TIRA: fotos de alturas distintas apiladas a ancho completo, sin
     // espacio entre ellas; el scroll las recorre en continuo dentro del cuadrado.
