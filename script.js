@@ -564,3 +564,55 @@ function initMobileProgress(photos, progressBox) {
         langBtn.addEventListener('click', () => applyLang(current === 'en' ? 'es' : 'en'));
     }
 })();
+
+// ==========================================
+// CURSOR PERSONALIZADO — círculo con seguimiento suave
+// ==========================================
+(function () {
+    // solo con puntero fino (mouse/trackpad); en táctil no aplica
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const dot = document.createElement('div');
+    dot.className = 'cursor';
+    document.body.appendChild(dot);
+
+    let tx = window.innerWidth / 2, ty = window.innerHeight / 2;   // objetivo (mouse)
+    let cx = tx, cy = ty;                                          // posición suavizada
+    let raf = null;
+
+    function draw() {
+        dot.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0) translate(-50%,-50%)';
+    }
+
+    function loop() {
+        cx += (tx - cx) * 0.4;   // lerp: retardo suave (más alto = menos lag)
+        cy += (ty - cy) * 0.4;
+        draw();
+        if (Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1) {
+            raf = requestAnimationFrame(loop);
+        } else {
+            raf = null;
+        }
+    }
+
+    let shown = false;
+    window.addEventListener('mousemove', (e) => {
+        tx = e.clientX;
+        ty = e.clientY;
+        if (!shown) { shown = true; dot.style.opacity = '1'; }
+        if (reduce) { cx = tx; cy = ty; draw(); return; }   // sin retardo
+        if (!raf) raf = requestAnimationFrame(loop);
+    }, { passive: true });
+
+    // crecer sobre elementos interactivos
+    const HOVER = 'a, button, .project-cover, [role="button"], input, textarea, select, label';
+    document.addEventListener('mouseover', (e) => {
+        dot.classList.toggle('is-hover', !!(e.target.closest && e.target.closest(HOVER)));
+    }, { passive: true });
+
+    // ocultar al salir de la ventana
+    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { if (shown) dot.style.opacity = '1'; });
+})();

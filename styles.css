@@ -1343,3 +1343,38 @@ section {
         white-space: nowrap;
     }
 }
+
+/* ==========================================
+   CURSOR PERSONALIZADO — círculo relleno con blend
+   Truco de color: con mix-blend-mode:difference, un círculo #D9D9D9
+   se ve EXACTAMENTE #1E1E1E sobre el fondo claro (#F7F7F7) y se vuelve
+   gris claro (visible) sobre las zonas oscuras (footer, cards).
+   Solo en punteros finos (no táctil).
+========================================== */
+@media (hover: hover) and (pointer: fine) {
+
+    * { cursor: none !important; }
+
+    .cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #D9D9D9;
+        mix-blend-mode: difference;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0;
+        transform: translate3d(-50%, -50%, 0);
+        transition: opacity .3s ease, width .25s ease, height .25s ease;
+        will-change: transform;
+    }
+
+    /* crece sobre elementos interactivos */
+    .cursor.is-hover {
+        width: 46px;
+        height: 46px;
+    }
+}
