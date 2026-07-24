@@ -488,7 +488,7 @@ function initMobileProgress(photos, progressBox) {
         'footer.cta': 'Trabajemos juntos y conectemos',
 
         // --- páginas de proyecto ---
-        'project.back': 'Volver a Oriana Bonato',
+        'project.back': 'Volver',
         'project.visit': 'Visita la web',
         'desc.p01': 'Identidad visual completa para un estudio de arquitectura: construcción del logotipo, sistema tipográfico, paleta cromática y aplicaciones sobre papelería y soportes digitales.',
         'desc.p04': 'Cuando hablé con Rocío por primera vez, me contó que necesitaba una web que explicara su trabajo, su experiencia y sus servicios. El reto no era solo informativo: había que construir un espacio que transmitiera su esencia. Aunque el contenido incluía bastante texto sobre su forma de trabajar, era fundamental que no se sintiera técnico o distante, sino cercano y humano, ya que al ser psicóloga, su enfoque profesional debía quedar claro sin perder calidez.<br><br>Trabajamos desde cero en la definición de su marca: creamos el logo, elegimos una paleta de tonos terracota y rosados que evocaran serenidad y confianza, y seleccionamos imágenes que reflejaran acompañamiento y escucha. El resultado es una web que combina una tipografía elegante con fotografías cálidas, generando un espacio digital que se siente tan seguro y humano como su consulta.',

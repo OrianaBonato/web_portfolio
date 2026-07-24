@@ -54,21 +54,6 @@ Personal portfolio of **Oriana Bonato**, a graphic / digital designer and front-
 
 ---
 
-## 🚀 Run locally
-
-There's no build. Just serve the folder with any static server:
-
-```bash
-# quick option with Python
-python -m http.server 8000
-# or with Node
-npx serve .
-```
-
-Then open `http://localhost:8000`. (Opening `index.html` directly also works, though a static server matches production behaviour more closely.)
-
----
-
 ## 🧩 Architecture notes
 
 - **No per-page HTML for global features**: the nav, custom cursor, mobile progress bar, i18n and translations all live in `script.js`, which is shared across the 8 pages. Each module is an IIFE that bails out early if its target element isn't in the DOM.
